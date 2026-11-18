@@ -1,0 +1,14 @@
+# operating system
+.DS_Store
+Thumbs.db
+
+# editors
+.vscode/
+.idea/
+
+# python
+__pycache__/
+*.pyc
+
+# hosting
+.vercel
