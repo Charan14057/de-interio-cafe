@@ -3346,7 +3346,7 @@
       const fio = new IntersectionObserver(es => es.forEach(e => {
         if (!e.isIntersecting) return; fio.unobserve(e.target);
         const el = e.target, to = +el.dataset.to, t0 = performance.now();
-        const tick = now => { const p = Math.min(1, (now - t0) / 1400), v = Math.round(to * (1 - Math.pow(1 - p, 3))); el.textContent = v + (p >= 1 ? (el.dataset.suf || '') : ''); if (p < 1) requestAnimationFrame(tick); };
+        const tick = now => { const p = Math.min(1, (now - t0) / 1400), v = Math.round(to * (1 - Math.pow(1 - p, 3))); el.innerHTML = v + (p >= 1 && el.dataset.suf ? '<small>' + el.dataset.suf + '</small>' : ''); if (p < 1) requestAnimationFrame(tick); };
         el.textContent = '0'; requestAnimationFrame(tick);
       }), { threshold: .6 });
       facts.forEach(f => fio.observe(f));
