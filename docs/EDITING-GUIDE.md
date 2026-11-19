@@ -99,10 +99,12 @@ accept larger files. The flip book on the Portfolio page shows pages from
 
 ## 8. Brand logos (Materials & hardware strip)
 
-PNG files in `site/images/brands/`, one colour (dark ink) on a transparent background, about 80 px
+PNG files in `site/images/brands/`, in each brand's own colours on a transparent background, 96 px
 tall. In `index.html`, search for `strip-brands`; each logo is one `<li class="brand-logo">`. The
 `--h` value on the image sets its height so that wide and square logos look the same size.
 Each logo appears twice in the list (the second copy keeps the scrolling seamless).
+The `?v=2` after each file name makes browsers fetch a fresh copy — when you replace a logo, raise
+the number (`?v=3`) in both of its `<img>` tags.
 
 ## 9. Colours and fonts
 

@@ -12,7 +12,7 @@ All pictures live in `site/images/`. Photographs are **WebP** files; brand logos
 | `services/` | Four pictures for "What we offer" | Home |
 | `craftsmanship/` | Sixteen craft pictures | Services · Our craftsmanship |
 | `materials/` | Sixteen materials and hardware pictures | Design Ideas · Materials & hardware |
-| `brands/` | Supplier logos (one ink colour, transparent background) | Home · Materials & hardware strip |
+| `brands/` | Supplier logos in their own colours (transparent background) | Home · Materials & hardware strip |
 | `_sizes/800/`, `_sizes/400/` | Smaller copies of every photo — **generated, do not edit** | phones and thumbnails |
 
 Project folders and their clients are listed in [image-inventory.csv](image-inventory.csv)

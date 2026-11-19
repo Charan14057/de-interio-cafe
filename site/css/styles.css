@@ -8642,15 +8642,15 @@ body.is-services .closing{z-index:9}
 
 /* =========================================================
    HOME — Materials & hardware strip: brand logos + materials
-   Row 1: brands we build with (logos in images/brands/, one ink colour)
+   Row 1: brands we build with (logos in images/brands/, in brand colours)
    Row 2: materials and fittings, running the other way
 ========================================================= */
 .strip-mat .strip-label small{margin-top:4px;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(21,19,15,.45)}
 .strip-rows{min-width:0;display:flex;flex-direction:column;gap:6px}
 .strip-brands .strip-track{padding:8px 0}
 .brand-logo{display:flex;align-items:center;justify-content:center;height:64px;padding:0 clamp(28px,3.4vw,54px);border-right:1px solid rgba(21,19,15,.08)}
-.brand-logo img{display:block;height:var(--h,34px);width:auto;max-width:150px;object-fit:contain;opacity:.72;transition:opacity .35s ease,transform .45s var(--ease)}
-.brand-logo:hover img{opacity:1;transform:translateY(-1px)}
+.brand-logo img{display:block;height:var(--h,34px);width:auto;max-width:150px;object-fit:contain;transition:transform .45s var(--ease)}
+.brand-logo:hover img{transform:translateY(-1px)}
 .strip-mats{border-top:1px solid rgba(21,19,15,.08)}
 .strip-mats .strip-track{animation-direction:reverse}
 .strip-mats .logo{height:46px}
