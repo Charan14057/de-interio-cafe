@@ -64,7 +64,8 @@ de-interio-cafe/
 │   ├── DEPLOYMENT.md               hosting on Vercel, custom domain, rolling back
 │   ├── GO-LIVE-CHECKLIST.md        what to confirm before and after launch
 │   ├── image-inventory.csv         every photo: project, client, location, room, type
-│   └── De_Interio_Cafe_Project_Documentation.pdf   project report (BRD, FRD, TRD, run book)
+│   ├── De_Interio_Cafe_Project_Documentation.pdf   project report (BRD, FRD, TRD, run book)
+│   └── De_Interio_Cafe_Test_Report.pdf             launch test report and real-device sign-off checklist
 ├── vercel.json                   hosting settings (serves the site/ folder, caching, security headers)
 ├── .editorconfig
 └── .gitignore
