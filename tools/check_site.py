@@ -34,7 +34,7 @@ def main():
     for ref in sorted(set(re.findall(r'(?:src|href)="((?:css|js|images|catalogue)/[^"#?]+)"', text))):
         if not os.path.exists(os.path.join(SITE, ref)):
             problems.append(f'missing file: {ref}')
-    for ref in sorted(set(re.findall(r'images/[\w/-]+\.(?:webp|png)', text))):
+    for ref in sorted(set(re.findall(r'images/[\w/-]+\.(?:webp|png|jpg)', text))):
         if '_sizes' in ref:
             continue
         if not os.path.exists(os.path.join(SITE, ref)):

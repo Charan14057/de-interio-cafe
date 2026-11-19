@@ -29,7 +29,7 @@ git push -u origin fix/phone-number  # Vercel posts a preview link on the pull r
 
 Vercel → project → **Settings → Domains** → add `deinteriocafe.com` (and `www.deinteriocafe.com`),
 then create the DNS records Vercel shows at the domain registrar. HTTPS is issued automatically.
-After the switch, update the `og:url` and `canonical` tags in `index.html` if they are added.
+After the switch, change the `og:url` and `og:image` addresses at the top of `index.html` to the new domain.
 
 ## Rolling back
 

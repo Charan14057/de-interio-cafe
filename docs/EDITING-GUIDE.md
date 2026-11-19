@@ -103,8 +103,9 @@ PNG files in `site/images/brands/`, in each brand's own colours on a transparent
 tall. In `index.html`, search for `strip-brands`; each logo is one `<li class="brand-logo">`. The
 `--h` value on the image sets its height so that wide and square logos look the same size.
 Each logo appears twice in the list (the second copy keeps the scrolling seamless).
-The `?v=2` after each file name makes browsers fetch a fresh copy — when you replace a logo, raise
-the number (`?v=3`) in both of its `<img>` tags.
+The `?v=3` after each file name makes browsers fetch a fresh copy — when you replace a logo, raise
+the number (`?v=4`) in both of its `<img>` tags. Keep logos small: save PNGs with a colour palette
+(about 5 KB each).
 
 ## 9. Colours and fonts
 

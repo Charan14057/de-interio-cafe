@@ -436,6 +436,9 @@
       col.appendChild(strip);
       el.appendChild(col);
     });
+    const sr = document.createElement('span');   /* the rolling digits are hidden from screen readers; this reads the number */
+    sr.className = 'sr'; sr.textContent = el.dataset.to;
+    el.appendChild(sr);
   });
   const countIO = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -593,8 +596,7 @@
   function openCard(n) {
     cards.forEach((c, i) => {
       const on = i === n;
-      c.classList.toggle('is-open', on);
-      c.setAttribute('aria-expanded', String(on));
+      c.classList.toggle('is-open', on);   /* every card's text is always readable by screen readers; opening is visual */
     });
   }
   cards.forEach((c, i) => {
@@ -1263,11 +1265,12 @@
     const t = now.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' });
     const h = +now.toLocaleString('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', hour12: false });
     const day = now.toLocaleString('en-GB', { timeZone: 'Asia/Kolkata', weekday: 'short' });
-    const open = day !== 'Sun' && h >= 10 && h < 19;
+    const hrs = CONTACT.hours[['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(day)];   /* same hours as the contact page */
+    const open = !!hrs && h >= hrs[0] && h < hrs[1];
     footTime.classList.toggle('is-closed', !open);
     $('span', footTime).textContent = `Office · ${t} · ${open ? 'Open' : 'Closed'}`;
   }
-  tickTime();
+  queueMicrotask(tickTime);   /* CONTACT is declared further down this file */
   setInterval(tickTime, 30000);
   $('#year').textContent = new Date().getFullYear();
 
@@ -2222,8 +2225,14 @@
     const f = svFlip.classList.contains('is-flipped');
     $('.sv-front', svFlip).setAttribute('aria-hidden', String(f));
     $('.sv-back', svFlip).setAttribute('aria-hidden', String(!f));
+    $('.sv-front', svFlip).inert = f;    /* the hidden face cannot take keyboard focus */
+    $('.sv-back', svFlip).inert = !f;
   };
-  $$('[data-flip]', svFlip).forEach(b => b.addEventListener('click', () => { svFlip.classList.toggle('is-flipped'); svFaces(); svRsQueue(); }));
+  $$('[data-flip]', svFlip).forEach(b => b.addEventListener('click', () => {
+    svFlip.classList.toggle('is-flipped'); svFaces(); svRsQueue();
+    const face = $(svFlip.classList.contains('is-flipped') ? '.sv-back' : '.sv-front', svFlip);
+    const to = $('[data-flip]', face); if (to) to.focus({ preventScroll: true });   /* keep keyboard focus on the visible face */
+  }));
   $('#svRsZoom').addEventListener('click', () => { const it = svRsL()[svRsI]; svLbOpen(it.views.map(v => ({ a: v[0], t: it.t, c: v[1] })), svRsK); });
   svRsGrid.addEventListener('pointerenter', e => { if (e.pointerType !== 'mouse') return; svRsHold = true; clearTimeout(svRsT); svRsGrid.classList.add('is-hold'); });
   svRsGrid.addEventListener('pointerleave', e => { if (e.pointerType !== 'mouse') return; svRsHold = false; svRsQueue(); });
@@ -2494,7 +2503,7 @@
       const lines = [2, 7, 1].filter(k => PF[k]).map(k => `<li><b>p.${pfPad(2 * k + 2)}</b><span>${pfEsc(PF[k].name)} <small>${pfEsc(PF[k].ct)}</small></span></li>`).join('');
       return `<div class="mz-cover">${pfMzImg(PF[0].img[1], PF[0].name)}<div class="mz-cv"><span class="mz-mast">De Interio</span><p class="mz-issue"><span>The Portfolio Issue</span><span>No. ${PF.length}</span><span>South India</span></p><p class="mz-cv-side"><b>Cover story</b>${pfEsc(PF[0].name)}, ${pfEsc(PF[0].place)}</p>${pfMzBadge()}<p class="mz-cv-big">${PF_MZ_W[PF.length] || PF.length} spaces,<br><em>${(PF_MZ_W[pfMzCities.length] || String(pfMzCities.length)).toLowerCase()} cities.</em></p><ul class="mz-cv-ls">${lines}</ul><div class="mz-cv-foot"><span>${pfMzCities.map(pfEsc).join(' · ')}</span>${pfMzBars}</div></div></div>`;
     }
-    if (f === 'toc') return `<div class="mz-paper mz-toc"><p class="mz-run"><span>De Interio · The Portfolio</span><span>Contents</span></p><p class="mz-kick">In this issue</p><p class="mz-toc-h">${PF_MZ_W[PF.length] || PF.length} spaces, <em>start to finish.</em></p><ol class="mz-toc-l">${PF.map((p, k) => `<li><button type="button" data-go="${k}" aria-label="Turn to ${pfEsc(p.name)}"><b>${pfPad(2 * k + 2)}</b><span>${pfEsc(p.name)}</span><small>${pfEsc(p.ct)}</small></button></li>`).join('')}</ol><p class="mz-folio"><span>De Interio</span><span>01</span></p></div>`;
+    if (f === 'toc') return `<div class="mz-paper mz-toc"><p class="mz-run"><span>De Interio · The Portfolio</span><span>Contents</span></p><p class="mz-kick">In this issue</p><p class="mz-toc-h">${PF_MZ_W[PF.length] || PF.length} spaces, <em>start to finish.</em></p><ol class="mz-toc-l">${PF.map((p, k) => `<li><button type="button" data-go="${k}"><b>${pfPad(2 * k + 2)}</b><span>${pfEsc(p.name)}</span><small>${pfEsc(p.ct)}</small></button></li>`).join('')}</ol><p class="mz-folio"><span>De Interio</span><span>01</span></p></div>`;
     const t = f[0], k = f[1], p = PF[k];
     const facts = `<dl class="mz-facts"><div><dt>Client</dt><dd>${pfEsc(p.client)}</dd></div><div><dt>Locality</dt><dd>${pfEsc(p.city)}</dd></div><div><dt>Spaces</dt><dd>${p.spaces.length} areas</dd></div></dl>`;
     const read = `<button type="button" class="mz-read" data-open="${k}">Read the full story <i>${pfMzArw}</i></button>`;
@@ -3617,5 +3626,17 @@
 
   /* ---- links to the testimonials page from anywhere ---- */
   $$('.strip', tpView).forEach(strip => new IntersectionObserver(e => strip.classList.toggle('is-off', !e[0].isIntersecting)).observe(strip));
+
+  /* ---- sideways-scrolling rows (strips with reduced motion, "why us" cards on phones)
+          take keyboard focus only while they can actually scroll ---- */
+  const scrollRows = $$('.strip-mq, .wcu-grid');
+  const markScrollRows = () => scrollRows.forEach(el => {
+    const scrolls = getComputedStyle(el).overflowX !== 'hidden' && el.scrollWidth > el.clientWidth + 2;
+    if (scrolls) el.tabIndex = 0; else el.removeAttribute('tabindex');
+  });
+  let scrollRowsT = 0;
+  addEventListener('resize', () => { clearTimeout(scrollRowsT); scrollRowsT = setTimeout(markScrollRows, 200); });
+  addEventListener('hashchange', () => setTimeout(markScrollRows, 900));
+  setTimeout(markScrollRows, 1200);
 
 })();

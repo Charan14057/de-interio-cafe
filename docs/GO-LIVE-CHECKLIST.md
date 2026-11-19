@@ -32,7 +32,8 @@
 ## After launch
 
 - [ ] Connect the custom domain (see [DEPLOYMENT.md](DEPLOYMENT.md#custom-domain)).
-- [ ] Add `sitemap.xml`, `robots.txt` and an Open Graph share image once the domain is final.
+- [ ] Add `sitemap.xml` and `robots.txt` once the domain is final, and change `og:url` and
+      `og:image` in `index.html` to the new domain (the share image is `images/share/og-image.jpg`).
 - [ ] Add analytics if the studio wants it (and a cookie notice if it sets cookies).
 - [ ] If the studio has original camera files or full-size renders, replace the photos with
       sharper versions (same names) — see [IMAGES.md](IMAGES.md).

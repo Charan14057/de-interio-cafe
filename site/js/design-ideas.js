@@ -140,7 +140,7 @@
       </button>
       <div class="tr-panel" id="trP${i}">
         <div class="tr-panel-in">
-          <h3>${esc(t.h)}</h3>
+          <h2>${esc(t.h)}</h2>
           <p>${esc(t.d)}</p>
           <a class="tr-go" href="#design-ideas" data-tour="${i}">Explore ${esc(t.n.toLowerCase())}
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
@@ -354,7 +354,6 @@
   $('#stCats').dataset.to  = CATS.length;
   $$('.odo', view).forEach(el => {
     const digits = String(el.dataset.to).split('');
-    el.setAttribute('aria-label', el.dataset.to);
     el.textContent = '';
     digits.forEach((d, k) => {
       const col = document.createElement('span');
@@ -368,6 +367,9 @@
       col.appendChild(strip);
       el.appendChild(col);
     });
+    const sr = document.createElement('span');   /* the rolling digits are hidden from screen readers; this reads the number */
+    sr.className = 'sr'; sr.textContent = el.dataset.to;
+    el.appendChild(sr);
   });
   new IntersectionObserver((entries, obs) => {
     if (!entries[0].isIntersecting) return;
